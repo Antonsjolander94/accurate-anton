@@ -1,4 +1,5 @@
 const express = require("express");
+const ffmpeg = require("fluent-ffmpeg");
 const router = express.Router();
 const fs = require("fs");
 const path = require("path");
@@ -6,9 +7,12 @@ const Post = require("../models/Post");
 const AWS = require("aws-sdk");
 const ffprobe = require("ffprobe");
 const ffprobeInstaller = require("@ffprobe-installer/ffprobe");
-const ffmpeg = require("fluent-ffmpeg");
 const multer = require("multer");
 const multerS3 = require("multer-s3");
+
+const ffmpegPath = require("@ffmpeg-installer/ffmpeg").path;
+ffmpeg.setFfmpegPath(ffmpegPath);
+
 const { uuid } = require("uuidv4");
 
 ffprobe.FFPROBE_PATH = ffprobeInstaller.path;
@@ -69,7 +73,6 @@ router.post("/", upload.single("file"), async (req, res, next) => {
 
       console.log("FFMPEG: Convert and create thumbnail.");
       ffmpeg(req.file.location)
-        .setFfmpegPath(process.env.FFMPEG_WINDOWS_PATH)
         .output(filePath)
         .screenshots({
           timestamps: ["50%"],
