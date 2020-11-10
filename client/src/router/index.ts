@@ -11,7 +11,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/video/:id",
     component: () =>
       import(/* webpackChunkName: "video" */ "../views/Video.vue"),
-    props: (route) => ({ query: route.params.id }),
+    props: (route) => ({ query: route.params.id, route: route.name }),
   },
 ];
 

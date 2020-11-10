@@ -5,9 +5,9 @@
         <VideoSection :videoUrl="video.video_url" v-if="video" />
 
         <MetaSection
-          :metadata="video.metadata"
-          :title="video.title"
           v-if="video && video.metadata"
+          :title="video.title"
+          :metadata="video.metadata"
         />
       </div>
       <TimelineSection />
@@ -17,7 +17,6 @@
 
 <script lang="ts">
 import { defineComponent, ref, watch } from "vue";
-import { useRoute } from "vue-router";
 import Post from "../interfaces/Post";
 import PostService from "../services/PostService";
 import VideoSection from "../components/Video/VideoSection.vue";
@@ -35,15 +34,9 @@ export default defineComponent({
   },
   setup(props, ctx) {
     const postService = new PostService();
-    const route = useRoute();
     const video = ref<Post | any>();
 
-    // const fetchData = async (): Promise<void> => {
-    //   video.value = await postService.FetchPosts();
-    // };
     console.log(props.query);
-    // fetchData();
-
     const fetchPost = async (id: string): Promise<void> => {
       try {
         video.value = await postService.getPost(id);
@@ -66,8 +59,8 @@ export default defineComponent({
   padding-top: 49px;
 }
 .v-section {
-  min-height: 65vh;
-  max-height: 65vh;
+  min-height: 60vh;
+  max-height: 60vh;
   height: 100%;
 }
 </style>

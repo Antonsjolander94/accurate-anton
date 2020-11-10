@@ -33,6 +33,7 @@ export default defineComponent({
       type: Object,
     },
     title: String,
+    imgUrl: String,
   },
   setup() {
     return {};
